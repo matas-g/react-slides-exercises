@@ -1,21 +1,33 @@
-console.log('Pasileido')
+console.log( 'Pasileido' )
+
+var PropTypes = window.React.PropTypes;
+var React = window.React;
+
+var styles = {
+    thumbnail: {
+        maxWidth: '242px',
+        textAlign: 'center',
+        marginLeft: 'auto',
+        marginRight: 'auto'
+    },
+    image: { width: '100%', height: '200px', display: 'block' }
+};
+
 
 //Komponento struktura
 var ProductCardComponent = React.createClass( {
     render: function() {
         return (
-            <div>
-                {/* Is bootstrap linko (skaidrese) */}
-                <div class="row">
-                    <div class="col-xs-6 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img src="smartphone.png" alt="Smartphone" height="200px" />
-                        </a>
+            <div className="col-sm-6 col-md-4">
+                <div className="thumbnail" style={styles.thumbnail}>
+                    <img src={this.props.image} style={styles.image} alt="..." />
+                    <div className="caption">
+                        <h3>{this.props.title}</h3>
+                        <p>{this.props.description}</p>
+                        <p>{this.props.price} Eur</p>
+                        <p><button className="btn btn-primary" role="button">Details</button></p>
                     </div>
-                    ...
                 </div>
-                {/* test - Mygtukas skaiciuojantis paspaudimus */}
-                <IncreasingButtonComponent />
             </div>
         );
     }
@@ -24,99 +36,59 @@ var ProductCardComponent = React.createClass( {
 // Komponento parametrai
 ProductCardComponent.propTypes = {
     // Properties JSON
-
+    id: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
 };
 
 
-// Visu komponentu struktura
-var ProductListComponent = React.createClass( {
-    render: function() {
-        // sitas bus reikalingas papildomam funkcionalumui
-        // var productHtml = this.props.products.map( function( p, idx ) {
+// Komponentu saraso struktura
+var ProductListComponent = function( props ) {
+    var productCards = props.products.map( function( product, index ) {
         return (
-            <div>
-                <p>Products List</p>
-                <ProductCardComponent />
-                <ProductCardComponent />
-            </div>
+            <ProductCardComponent
+                key={index}
+                id={product.id}
+                image={product.image}
+                title={product.title}
+                description={product.description}
+                price={product.price}
+                />
         );
-        // });
-    }
-});
+    });
+    return ( <div className="row">{productCards}</div> );
+};
 
+//Properties JSON
 ProductListComponent.propTypes = {
-    // Properties JSON
+    products: React.PropTypes.array.isRequired,
 };
 
-{/* test - Mygtukas skaiciuojantis paspaudimus */ }
-var IncreasingButtonComponent = React.createClass( {
-    getInitialState: function() {
-        return { count: 0 };
+// Produktu duomenys
+var testProducts = [
+    {
+        id: 1,
+        image: 'samsung.jpg',
+        title: 'Telephons',
+        description: 'Fainas',
+        price: 2.5
     },
-
-    handleClick: function() {
-        this.setState( {
-            count: this.state.count + 1
-        });
+    {
+        id: 2,
+        image: 'samsung.jpg',
+        title: 'Telephons 2',
+        description: 'Fainas',
+        price: 2.7
     },
-
-    render: function() {
-        return (
-            <div>
-                {this.state.count} &nbsp;
-                <button className="btn btn­default"
-                    onClick={this.handleClick}>Increase</button>
-            </div>
-        );
+    {
+        id: 3,
+        image: 'samsung.jpg',
+        title: 'Telephons 3',
+        description: 'Fainas',
+        price: 2.8
     }
-});
+];
 
-// Nupiesia ProductListComponent
-ReactDOM.render(
-    <ProductListComponent />,
-    document.getElementById( 'root' )
-);
-
-
-// TODO - uzd2 - SelfDestructTimer bandymas - paziuret foto
-// neveikia ... nebaigta
-var SelfDestructTimerComponent = React.createClass( {
-    getInitialState: function() {
-        return {
-            count: 3,
-        };
-    },
-
-    componentWillMount: function() {
-        // load data from server
-        setInterval( this.decreaseDestructCounter, 1000 );
-    },
-
-    decreaseDestructCounter: function() {
-        if ( this.state.count > 0 ) {
-            this.setState( { count: this.state.count - 1 });
-        }
-    },
-
-    // Other lifecycle methods if needed
-    // Other methods for click handling and stuff
-    render: function() {
-        var backgroundStyle = undefined;
-        var isDestroyed = this.state.count <= 0;
-        if ( isDestroyed ) {
-            backgroundStyle = { background: 'red' };
-        }
-    }
-
-});
-
-
-// TODO - uzd3 - ProductAdministrationComponent
-// TODO - issiaiskint kodel negaliu atsidaryt ex03 branch (daryt pull is originalo?)
-//var ProductAdministrationComponent = React.createClass( {
-//    render: function() {
-//        return { title: 'Pradine reiksme'
-//        };
-//        
-//    }
-//});
+ReactDOM.render( <ProductListComponent products={testProducts} />, document.getElementById( 'root' ) );
