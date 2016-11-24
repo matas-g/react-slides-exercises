@@ -8,7 +8,7 @@ var styles = {
         marginLeft: 'auto',
         marginRight: 'auto'
     },
-    image: { width: '100%', height: '200px', display: 'block' }
+    image: { width: '100%', height: '200px', display: 'block' },
 };
 
 var ProductCardComponent = React.createClass( {
@@ -37,6 +37,50 @@ ProductCardComponent.propTypes = {
     price: PropTypes.number.isRequired,
 };
 
+// 2 uzduotis.
+var SelfDestructTimerComponent = React.createClass( {
+    getInitialState: function() {
+        return {
+            countdown: 42,
+            intervalId: -1,
+        }
+    },
+
+    componentWillMount: function() {
+        // load data from server
+        this.setState( {
+            intervalId: setInterval( this.countdown, 1000 )
+        });
+    },
+
+    componentWillUnmount: function() {
+        var intervalId = this.state.intervalId;
+        clearInterval( intervalId );
+    },
+
+    countdown: function() {
+        var currentCountdown = this.state.countdown;
+        if ( this.state.countdown > 0 ) {
+            this.state( {
+                countdown: currentCountdown - 1
+            })
+        }
+    },
+
+    render: function() {
+        var style = {};
+        if ( this.state.countdown < 1 ) {
+            style.background = 'red';
+        }
+        return (
+            <div style={style}>
+                {this.state.countdown}
+            </div>
+        );
+    }
+});
+
+
 var ProductListComponent = function( props ) {
     var productCards = props.products.map( function( product, index ) {
         return (
@@ -50,7 +94,10 @@ var ProductListComponent = function( props ) {
                 />
         );
     });
-    return ( <div className="row">{productCards}</div> );
+    return ( <div className="row">
+        <SelfDestructTimerComponent />
+        {productCards}
+    </div> );
 };
 
 ProductListComponent.propTypes = {
@@ -81,36 +128,42 @@ var testProducts = [
     }
 ];
 
+
+{/* TODO - Mygtukas skaiciuojantis paspaudimus */ }
+var IncreasingButtonComponent = React.createClass( {
+    getInitialState: function() {
+        return {
+            count: 0
+        };
+    },
+
+    handleClick: function() {
+        this.setState( {
+            count: this.state.count + 1
+        });
+    },
+
+    render: function() {
+        return (
+            <div>
+                {this.state.count} &nbsp;
+              <button className="btn btn­-default"
+                    onClick={this.handleClick}>Increase</button>
+            </div>
+        );
+    }
+});
+
+
 ReactDOM.render(
     <div>
         <ProductListComponent products={testProducts} />
-        {/*<IncreasingButtonComponent />*/}
+        <IncreasingButtonComponent />
     </div>,
     document.getElementById( 'root' ) );
 
 
-//{/* TODO - Mygtukas skaiciuojantis paspaudimus (pries tai veike) */ }
-//var IncreasingButtonComponent = React.createClass( {
-//    getInitialState: function() {
-//        return { count: 0 };
-//    },
-//
-//    handleClick: function() {
-//        this.setState( {
-//            count: this.state.count + 1
-//        });
-//    },
-//
-//    render: function() {
-//        return (
-//            <div>
-//                {this.state.count} &nbsp;
-//                <button className="btn btn­default"
-//                    onClick={this.handleClick}>Increase</button>
-//            </div>
-//        );
-//    }
-//});
+
 
 
 // TODO - uzd2 - SelfDestructTimer bandymas - paziuret foto
