@@ -61,7 +61,7 @@ var SelfDestructTimerComponent = React.createClass( {
     countdown: function() {
         var currentCountdown = this.state.countdown;
         if ( this.state.countdown > 0 ) {
-            this.state( {
+            this.setState( {
                 countdown: currentCountdown - 1
             })
         }
