@@ -10,7 +10,7 @@ var styles = {
         marginLeft: 'auto',
         marginRight: 'auto'
     },
-    image: { width: '100%', height: '200px', display: 'block' }
+    image: { width: '100%', height: '100%', display: 'block' }
 };
 
 
@@ -70,21 +70,21 @@ ProductListComponent.propTypes = {
 var testProducts = [
     {
         id: 1,
-        image: 'samsung.jpg',
+        image: 'smartphone.png',
         title: 'Telephons',
         description: 'Fainas',
         price: 2.5
     },
     {
         id: 2,
-        image: 'samsung.jpg',
+        image: 'smartphone.png',
         title: 'Telephons 2',
         description: 'Fainas',
         price: 2.7
     },
     {
         id: 3,
-        image: 'samsung.jpg',
+        image: 'smartphone.png',
         title: 'Telephons 3',
         description: 'Fainas',
         price: 2.8
