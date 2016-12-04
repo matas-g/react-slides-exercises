@@ -1,3 +1,6 @@
+/*
+ * ex01 - Done
+ */
 console.log( 'pasileido' );
 
 const PropTypes = window.React.PropTypes;
@@ -36,7 +39,7 @@ var ProductCardComponent = React.createClass( {
                         <p>{this.props.price}</p>
                         <p>
                             <a href={this.props.details_link} className="btn btn-default" role="button" style={styles.button}>Details</a>
-                            <a href={this.props.details_link} className="btn btn-primary" role="button" style={styles.button}>Add to Cart</a>
+                            <a href={this.props.cart_link} className="btn btn-primary" role="button" style={styles.button}>Add to Cart</a>
                         </p>
                     </div>
                 </div>
@@ -53,6 +56,8 @@ ProductCardComponent.PropTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
+    details_link: PropTypes.string.isRequired,
+    cart_link: PropTypes.string.isRequired,
 };
 
 
@@ -69,6 +74,8 @@ var ProductListComponent = function( props ) {
                 title={product.title}
                 description={product.description}
                 price={product.price}
+                details_link={product.details_link}
+                cart_link={product.cart_link}
                 />
         )
     });
@@ -90,6 +97,8 @@ var testProductsArray = [
         title: 'Black bracelet',
         description: 'High quality hand-made black paracord bracelet',
         price: 10.99,
+        details_link: 'https://www.google.lt',
+        cart_link: 'http://www.ebay.com',
     },
     {
         id: 2,
@@ -98,6 +107,8 @@ var testProductsArray = [
         title: 'Black bracelet',
         description: 'High quality hand-made black paracord bracelet',
         price: 10.99,
+        details_link: 'https://www.google.lt',
+        cart_link: 'http://www.ebay.com',
     },
     {
         id: 3,
@@ -106,6 +117,8 @@ var testProductsArray = [
         title: 'Black bracelet',
         description: 'High quality hand-made black paracord bracelet',
         price: 10.99,
+        details_link: 'https://www.google.lt',
+        cart_link: 'http://www.ebay.com',
     },
     {
         id: 4,
@@ -114,6 +127,8 @@ var testProductsArray = [
         title: 'Black bracelet',
         description: 'High quality hand-made black paracord bracelet',
         price: 10.99,
+        details_link: 'https://www.google.lt',
+        cart_link: 'http://www.ebay.com',
     },
     {
         id: 5,
@@ -122,6 +137,8 @@ var testProductsArray = [
         title: 'Black bracelet',
         description: 'High quality hand-made black paracord bracelet',
         price: 10.99,
+        details_link: 'https://www.google.lt',
+        cart_link: 'http://www.ebay.com',
     },
     {
         id: 6,
@@ -138,6 +155,8 @@ var testProductsArray = [
         title: 'Black bracelet',
         description: 'High quality hand-made black paracord bracelet',
         price: 10.99,
+        details_link: 'https://www.google.lt',
+        cart_link: 'http://www.ebay.com',
     },
     {
         id: 8,
@@ -146,6 +165,8 @@ var testProductsArray = [
         title: 'Black bracelet',
         description: 'High quality hand-made black paracord bracelet',
         price: 10.99,
+        details_link: 'https://www.google.lt',
+        cart_link: 'http://www.ebay.com',
     },
 ];
 
