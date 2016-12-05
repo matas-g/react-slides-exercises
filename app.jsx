@@ -1,5 +1,7 @@
 /*
- * ex01 - Done
+ * ex02 - Done
+ * 
+ * Reiketu pasinagrineti timer veikima.
  */
 console.log( 'pasileido' );
 
@@ -79,7 +81,11 @@ var ProductListComponent = function( props ) {
                 />
         )
     });
-    return ( <div className="Row">{productCards}</div> );
+    return (
+        <div className="Row">
+            <SelfDestructTimerComponent />
+            {productCards}
+        </div> );
 };
 
 // JSON properties. (input type for "props.products.map(...)")
@@ -169,6 +175,54 @@ var testProductsArray = [
         cart_link: 'http://www.ebay.com',
     },
 ];
+
+// ex02 - SelfDestructTimer
+var SelfDestructTimerComponent = React.createClass( {
+    getInitialState: function() {
+        return {
+            // some props
+            countdown: 3,
+            intervalID: -1,
+        }
+    },
+
+    componentWillMount: function() {
+        // load data from server
+        this.setState( {
+            // load some props
+            intervalID: setInterval( this.countdown, 1000 )
+        });
+    },
+
+    // Other lifecycle methods if needed
+    // Other methods for click handling and stuff
+
+    componentWillUnmount: function() {
+        var intervalId = this.state.intervalID;
+        clearInterval( intervalId );
+    },
+
+    countdown: function() {
+        var currentCountdown = this.state.countdown;
+        if ( this.state.countdown > 0 ) {
+            this.setState( {
+                countdown: currentCountdown - 1
+            })
+        }
+    },
+
+    render: function() {
+        var style = {};
+        if ( this.state.countdown < 1 ) {
+            style.background = 'red';
+        }
+        return (
+            <div style={style}>
+                {this.state.countdown}
+            </div>
+        );
+    }
+});
 
 
 // Displays on screen
