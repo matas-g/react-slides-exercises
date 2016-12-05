@@ -182,7 +182,7 @@ var SelfDestructTimerComponent = React.createClass( {
         return {
             // some props
             countdown: 3,
-            intervalID: -1,
+            intervalId: -1,
         }
     },
 
@@ -190,21 +190,22 @@ var SelfDestructTimerComponent = React.createClass( {
         // load data from server
         this.setState( {
             // load some props
-            intervalID: setInterval( this.countdown, 1000 )
+            intervalId: setInterval( this.countdown, 1000 )
         });
+        console.log( 'componentWillMount: ' + this.state.countdown )
     },
 
     // Other lifecycle methods if needed
     // Other methods for click handling and stuff
 
     componentWillUnmount: function() {
-        var intervalId = this.state.intervalID;
-        clearInterval( intervalId );
+        clearInterval( this.state.intervalId );
     },
 
     countdown: function() {
         var currentCountdown = this.state.countdown;
         if ( this.state.countdown > 0 ) {
+            console.log( 'countdown: ' + this.state.countdown )
             this.setState( {
                 countdown: currentCountdown - 1
             })
@@ -216,11 +217,8 @@ var SelfDestructTimerComponent = React.createClass( {
         if ( this.state.countdown < 1 ) {
             style.background = 'red';
         }
-        return (
-            <div style={style}>
-                {this.state.countdown}
-            </div>
-        );
+        console.log( 'render: ' + this.state.countdown );
+        return ( <div style={style}> {this.state.countdown}</div> );
     }
 });
 
